@@ -14,7 +14,9 @@ import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.mycompany.entites.Services;
+import com.mycompany.gui.BaseForm;
 import com.mycompany.gui.GererService;
+import com.mycompany.gui.ListServiceForm;
 import com.mycompany.services.ServicesService;
 
 /**
@@ -55,11 +57,8 @@ public class MyApplication {
             return;
         }
         
-        Services s=new Services(60,"mortadha","echawech","hello",2);
-        ServicesService ss=new ServicesService();
-        
-        
-        
+ListServiceForm n=new ListServiceForm(theme);
+n.show();
         
         
     }
