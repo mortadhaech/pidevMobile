@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component type="Form" name="AjouterService" cloudDestinationProperty="AjouterService" layout="BoxLayout" boxLayoutAxis="Y" >
+  <component type="Container" name="Container" cloudDestinationProperty="Container" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="4" flowLayoutValign="0" >
+    <component type="Label" name="Label" cloudDestinationProperty="Label" text="Ajouter Service" >
+    </component>
+  </component>
+  <component type="Container" name="Container1" cloudDestinationProperty="Container1" >
+  </component>
+  <component type="Container" name="Container2" cloudDestinationProperty="Container2" >
+    <component type="TextField" name="Nomserv" cloudBoundProperty="text" cloudDestinationProperty="Nomserv" text="" hint="Nom de Service" columns="50" >
+    </component>
+  </component>
+  <component type="Container" name="Container3" cloudDestinationProperty="Container3" >
+    <component type="TextField" name="Descserv" cloudBoundProperty="text" cloudDestinationProperty="Descserv" text="" hint="Description de service" columns="50" >
+    </component>
+  </component>
+  <component type="Container" name="Container4" cloudDestinationProperty="Container4" >
+    <component type="TextField" name="nbServ" cloudBoundProperty="text" cloudDestinationProperty="nbServ" text="" hint="Nombre de sous service" columns="50" >
+    </component>
+  </component>
+  <component type="Container" name="Container5" cloudDestinationProperty="Container5" layout="FlowLayout" flowLayoutFillRows="false" flowLayoutAlign="3" flowLayoutValign="0" >
+    <component type="Button" name="btnajout" cloudDestinationProperty="Button" text="Ajouter" >
+    </component>
+    <component type="Button" name="btnAnnuler" cloudDestinationProperty="Button1" text="Annuler" >
+    </component>
+  </component>
+</component>
