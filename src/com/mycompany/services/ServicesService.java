@@ -147,13 +147,12 @@ public class ServicesService {
                         String des = obj.get("serviceDescription").toString();
                         String img = obj.get("serviceImage").toString();
 
-                        int nb = Integer.parseInt(obj.get("nbSousServices").toString());
 
                         ser.setService_id((int)id );
                         ser.setService_nom(Nom);
                         ser.setService_description(des);
                         ser.setService_image(img);
-                        ser.setNb_sous_services(nb);
+                        ser.setNb_sous_services(65);
                         result.add(ser);
 
                     }

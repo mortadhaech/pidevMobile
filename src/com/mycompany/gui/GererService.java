@@ -67,7 +67,7 @@ public class GererService {
         TextField nbService = (TextField) uIBuilder.findByName("NbS", c);
         //ImageViewer imgS=(ImageViewer) uIBuilder.findByName("imgS", c);
         String imgS = "hello";
-        Button btnAj = (Button) uIBuilder.findByName("BtnModifier", c);
+        Button btnMo = (Button) uIBuilder.findByName("BtnModifier", c);
         Button btnAn = (Button) uIBuilder.findByName("btnA", c);
         int id = services.getService_id();
         nom.setText(services.getService_nom());
@@ -78,7 +78,7 @@ public class GererService {
 
         Services service = new Services();
         ServicesService servicesService = new ServicesService();
-        btnAj.addPointerPressedListener(l -> {
+        btnMo.addPointerPressedListener(l -> {
 
             service.setService_nom(nom.getText());
             service.setService_description(des.getText());
@@ -89,6 +89,7 @@ public class GererService {
                 nom.setText("");
                 des.setText("");
                 nbService.setText("");
+         new ListService();
 
             }
         });
