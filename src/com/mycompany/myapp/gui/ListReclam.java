@@ -10,13 +10,13 @@ import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.Reclamation;
 import com.mycompany.myapp.services.serviceReclamation;
 import java.util.ArrayList;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-import com.mycompany.myapp.services.ServiceTask;
 
 /**
  *
@@ -44,6 +44,8 @@ public class ListReclam extends Form {
     
     
     public void addElement(Reclamation reclam) {
+        Button btn_up =new Button("update")  ;
+        btn_up.addActionListener(e-> new EditReclam(this,reclam.getId()).show());
     Button btn_2 = new Button("Delete");
     btn_2.addActionListener(new ActionListener() {
         @Override
@@ -63,6 +65,8 @@ public class ListReclam extends Form {
     });
 
     Button btn = new Button(reclam.getTitle());
+    Label right = new Label("titre :"+reclam.getTitle());
+    Label right2 = new Label("subject :"+reclam.getSubject());
     btn.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent evt) {
@@ -70,7 +74,7 @@ public class ListReclam extends Form {
         }
     });
 
-    addAll(btn, btn_2);
+    addAll(right,right2, btn_2,btn_up);
 }
 
 private void refreshList() {

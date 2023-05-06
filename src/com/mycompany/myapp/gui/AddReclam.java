@@ -16,8 +16,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.Reclamation;
-import com.mycompany.myapp.entities.Task;
-import com.mycompany.myapp.services.ServiceTask;
+
 
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;

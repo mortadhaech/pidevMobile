@@ -29,6 +29,7 @@ import java.util.Map;
  */
 public class serviceReclamation {
     public ArrayList<Reclamation> reclam;
+    public Reclamation rec ;
     
     public static serviceReclamation instance = null;
     public boolean resultOK;
@@ -53,10 +54,10 @@ public class serviceReclamation {
                             req.setPost(false);
 
 
-            String url = Statics.BASE_URL + "ajouterreclamJsoon/81"+"?titre=" + titre + "&desc=" + subject;
-            String urll =  "127.0.0.1:8000/ajouterreclamJsoon/81"+"?titre=" + titre + "&desc=" + subject;
+            String url = Statics.BASE_URL + "ajouterreclamJsoon/81/94"+"?titre=" + titre + "&desc=" + subject;
+            //String urll =  "http://127.0.0.1:8000/ajouterreclamJsoon/81"+"?titre=" + titre + "&desc=" + subject;
             //System.out.println(url);
-            req.setUrl(urll);
+            req.setUrl(url);
             System.out.println(req.getUrl());
 
             req.addResponseListener((e) -> {
@@ -85,18 +86,19 @@ public class serviceReclamation {
         System.out.println(list);
         for (Map<String, Object> obj : list) {
             Reclamation t = new Reclamation();
+            System.out.println(obj);
             //t.setId(Integer.parseInt(obj.get("id").toString()));
             float id = Float.parseFloat(obj.get("id").toString());
                 t.setId((int) id);
-                if(obj.get("title")==null){
-                t.setTitle("null");
+                if(obj.get("titre")==null){
+                t.setTitle("ff");
                 }else{
-            t.setTitle(obj.get("title").toString());
+            t.setTitle(obj.get("titre").toString());
                 }
-                if(obj.get("subject")==null){
+                if(obj.get("sujet")==null){
                 t.setSubject("null");
                 }else{
-            t.setSubject(obj.get("subject").toString());}
+            t.setSubject(obj.get("sujet").toString());}
                 
                 if((Date)obj.get("date")==null){
                 t.setDate(null);
@@ -117,7 +119,7 @@ public class serviceReclamation {
     
     
     public ArrayList<Reclamation> getAllReclam() {
-    String url = Statics.BASE_URL + "showreclamuserJsONALL/";
+    String url = Statics.BASE_URL + "showreclamJSOONALL/";
     //req = new ConnectionRequest();
     req.setUrl(url);
     req.setPost(false);
@@ -150,5 +152,109 @@ public class serviceReclamation {
         
         
         
+    }
+    
+    
+    public Reclamation getReclam(int id) {
+        
+        String url = Statics.BASE_URL + "showreclamJSOONById/"+id+"/"   ;
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                rec = parseReclambyid(new String(req.getResponseData()));
+
+                req.removeResponseListener(this);
+            }
+        });
+        
+        
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        
+        
+        return rec;
+        
+        
+    }
+    
+    
+    public Reclamation parseReclambyid(String jsonText) {
+        try {
+           System.out.println("aloo 2 ");
+
+            rec = new Reclamation();
+           System.out.println("aloo 3");
+
+            JSONParser j = new JSONParser();
+             System.out.println("aloo 4");
+
+            Map<String, Object> reclamListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            System.out.println(reclamListJson.values()+"cjfkf,kfffffffff");
+            List<Map<String, Object>> list = (List<Map<String, Object>>) reclamListJson.get("root");
+        System.out.println(list);     
+
+             for (Map<String, Object> obj : list) {
+                float id = Float.parseFloat(obj.get("id").toString());
+                rec.setId((int) id);
+//                if (Float.parseFloat(list.get("id").toString())==0) 
+//                {
+//                    rec.setId(0); 
+//                    System.out.println("yaya aaaaaaaaanooooooooo");
+//                } 
+//                else 
+//                {
+//                   float id = Float.parseFloat(reclamListJson.get("id").toString());
+//                   System.out.println("yaya aaaaaaaaa");
+//                 
+//
+//                rec.setId((int) id);
+//                 }
+                
+                if (obj.get("titre") == null) 
+                {
+                    rec.setTitle("null"); 
+                } 
+                else 
+                {
+                   rec.setTitle(obj.get("titre").toString())        ;
+                 }
+              
+                    if(obj.get("sujet")==null){
+                
+                    rec.setSubject("null"); }
+                    
+                    else {
+                        rec.setSubject(obj.get("sujet").toString());}
+             }
+        } catch (IOException ex) {
+                 System.out.println("errrrrrrrrr");
+        }
+        
+
+        
+        return rec ;
+    } 
+    
+    public boolean uppReclamation(Reclamation t) {
+
+        String titre = t.getTitle();
+        String subject =  t.getSubject() ;
+        
+        //String url = Statics.BASE_URL + "create?name=" + t.getName() + "&status=" + t.getStatus();
+        String url = Statics.BASE_URL + "modifreclamJsoon/"+t.getId()+"?titre=" + titre + "&desc=" + subject ;
+
+        req.setUrl(url);
+        req.setPost(false);
+        
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
     }
 }

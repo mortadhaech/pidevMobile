@@ -54,6 +54,12 @@ public class Reclamation {
         this.title = title;
         this.subject = subject;
     }
+
+    public Reclamation(int id, String title, String subject) {
+        this.id = id;
+        this.title = title;
+        this.subject = subject;
+    }
     
     
     public Reclamation() {
