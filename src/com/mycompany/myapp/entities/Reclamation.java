@@ -41,6 +41,10 @@ public class Reclamation {
         this.Freelancer = Freelancer;
     }
 
+    public Reclamation(String subject) {
+        this.subject = subject;
+    }
+
     public Reclamation(int id, String title, String subject, Date date, String consulter) {
         this.id = id;
         this.title = title;

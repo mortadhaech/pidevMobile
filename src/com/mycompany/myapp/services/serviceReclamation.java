@@ -119,7 +119,7 @@ public class serviceReclamation {
     
     
     public ArrayList<Reclamation> getAllReclam() {
-    String url = Statics.BASE_URL + "showreclamJSOONALL/";
+    String url = Statics.BASE_URL + "showreclamJSOONALLConsulter/";
     //req = new ConnectionRequest();
     req.setUrl(url);
     req.setPost(false);

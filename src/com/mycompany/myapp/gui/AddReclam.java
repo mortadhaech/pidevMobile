@@ -31,7 +31,7 @@ import java.util.Date;
 public class AddReclam extends Form{
     
     public AddReclam(Form previous) {
-        setTitle("Add a new task");
+        setTitle("Add a new Reclamation");
         setLayout(BoxLayout.y());
         
         TextField tfTitre = new TextField("","Titre");

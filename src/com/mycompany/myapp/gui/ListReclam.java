@@ -24,7 +24,7 @@ import com.codename1.ui.events.ActionListener;
  */
 public class ListReclam extends Form {
     public ListReclam(Form previous) {
-        setTitle("List Questionnaire");
+        setTitle("List Reclamation");
         setLayout(BoxLayout.y());
 
         /*SpanLabel sp = new SpanLabel();
