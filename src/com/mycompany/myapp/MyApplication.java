@@ -15,6 +15,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.codename1.ui.layouts.BorderLayout;
 import com.mycompany.entites.Services;
+import com.mycompany.gui.CalendarForm;
 import com.mycompany.gui.GererService;
 import com.mycompany.gui.ListService;
 import com.mycompany.services.ServicesService;
@@ -54,7 +55,7 @@ public class MyApplication {
             return;
         }
         
-         new ListService();
+        new CalendarForm().show();
 
         
         
