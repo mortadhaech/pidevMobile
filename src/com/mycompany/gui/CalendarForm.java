@@ -68,11 +68,11 @@ public class CalendarForm extends BaseForm {
         gui_Calendar_1.replace(combos, cnt, null);
         
          EngagmentService e=new EngagmentService();
-         ArrayList<Engagment> en=e.AffichageEvenement(63);
+         ArrayList<Engagment> en=e.AffichageEvenement(58);
         
               for(Engagment e1: en)
          { Date dateC=null;
-        add(createEntry(resourceObjectInstance,true, e1.getHeure()+"", "", "",e1.getNom()+"", "01/06/2023", "", ""));
+        add(createEntry(resourceObjectInstance,true, e1.getHeure()+"", "", "",e1.getNom()+"", e1.getDate()+"", "", ""));
               String dateString = e1.getDate();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -81,9 +81,7 @@ public class CalendarForm extends BaseForm {
             e2.printStackTrace();
         }
         
-         gui_Calendar_1.setCurrentDate(dateC);
-            gui_Calendar_1.setSelectedDate(p.getDate());
-            gui_Calendar_1.setDate(p.getDate());
+            gui_Calendar_1.setSelectedDate(dateC);
         
           
          }
@@ -131,7 +129,6 @@ public class CalendarForm extends BaseForm {
                 add(BorderLayout.EAST, loc);
     }
     
-////-- DON'T EDIT BELOW THIS LINE!!!
     protected com.codename1.ui.Calendar gui_Calendar_1 = new com.codename1.ui.Calendar();
 
 

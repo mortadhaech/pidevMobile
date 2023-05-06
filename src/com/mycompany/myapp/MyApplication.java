@@ -18,6 +18,7 @@ import com.mycompany.entites.Services;
 import com.mycompany.gui.CalendarForm;
 import com.mycompany.gui.GererService;
 import com.mycompany.gui.ListService;
+import com.mycompany.gui.ServiceFormFront;
 import com.mycompany.services.ServicesService;
 
 
@@ -55,7 +56,7 @@ public class MyApplication {
             return;
         }
         
-        new CalendarForm().show();
+        new ServiceFormFront(theme).show();
 
         
         
