@@ -12,6 +12,7 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entites.Services;
 import com.mycompany.entites.Sous_services;
+import static com.mycompany.myapp.MyApplication.theme;
 import com.mycompany.services.ServicesService;
 import com.mycompany.services.SousServicesService;
 import java.util.ArrayList;
@@ -25,13 +26,14 @@ public class SousServiceFormFrons extends Form{
         
         for(Sous_services b: s)
         {
-        addService(b.getSous_service_nom(), b.getSous_service_description(),b.getSous_service_image(), ColorUtil.BLUE);
+            
+        addService(b.getSous_service_id(),b.getSous_service_nom(), b.getSous_service_description(),b.getSous_service_image(), ColorUtil.BLUE);
             
         }
         
     }
 
-    public void addService(String serviceName, String description, String imagePath, int color) {
+    public void addService(int sserviceId ,String serviceName, String description, String imagePath, int color) {
         MultiButton serviceButton = new MultiButton(serviceName);
         serviceButton.setTextLine2(description);
         serviceButton.setIcon(createColorIcon(color)); // Créez une icône colorée avec la couleur spécifiée
@@ -46,8 +48,9 @@ public class SousServiceFormFrons extends Form{
         }
         
         serviceButton.addActionListener(e -> {
-            // Action à effectuer lors du clic sur le bouton du service
-            System.out.println("Service " + serviceName + " selected");
+
+        new FreelancerFormFront(theme,sserviceId).show();
+
         });
 
         add(serviceButton);
@@ -71,8 +74,8 @@ public class SousServiceFormFrons extends Form{
         return encodedImage;
     }
 
-    public void showDemo(Resources res,int serviceId ) {
-        SousServiceFormFrons form = new SousServiceFormFrons(res,serviceId);
+    public void showDemo(Resources res,int sserviceId ) {
+        SousServiceFormFrons form = new SousServiceFormFrons(res,sserviceId);
         form.show();
     }
     

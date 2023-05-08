@@ -60,7 +60,6 @@ public class BaseForm extends Form {
         getToolbar().addComponentToSideMenu(inbox);
         
        // getToolbar().addCommandToSideMenu("Stats", statsImage, e -> new StatsForm(res).show());
-        getToolbar().addCommandToSideMenu("Calendar", calendarImage, e -> new CalendarForm(res).show());
         getToolbar().addCommandToSideMenu("Map", null, e -> {});
        // getToolbar().addCommandToSideMenu("Trending", trendingImage, e -> new TrendingForm(res).show());
         getToolbar().addCommandToSideMenu("Settings", null, e -> {});

@@ -8,15 +8,18 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.util.UIBuilder;
 import com.codename1.io.Log;
+import com.codename1.ui.Dialog;
 import com.mycompany.entites.Services;
 import static com.mycompany.myapp.MyApplication.theme;
 import com.mycompany.services.ServicesService;
-
 import java.io.IOException;
 
 public class GererService {
 
+
     public static void AjouterServiceForm() {
+        
+        
         UIBuilder uIBuilder = new UIBuilder();
         uIBuilder.registerCustomComponent("imgS", ImageViewer.class);
 
@@ -26,7 +29,7 @@ public class GererService {
         TextField des = (TextField) uIBuilder.findByName("Descserv", c);
         TextField nbService = (TextField) uIBuilder.findByName("nbServ", c);
         //ImageViewer imgS=(ImageViewer) uIBuilder.findByName("imgS", c);
-        String imgS = "hello";
+        String imgS = "10cfdbc6-9b83-4d8c-bb0f-49e0117aef8a.PNG";
         Button btnAj = (Button) uIBuilder.findByName("btnajout", c);
         Button btnannuler = (Button) uIBuilder.findByName("btnAnnuler", c);
 
@@ -36,18 +39,40 @@ public class GererService {
         ServicesService servicesService = new ServicesService();
         btnAj.addPointerPressedListener(l -> {
 
-            service.setService_nom(nom.getText());
-            service.setService_description(des.getText());
-            service.setService_image(imgS);
-            service.setNb_sous_services(Integer.parseInt(nbService.getText()));
+          String nomText = nom.getText();
+            String desText = des.getText();
+            String nbServiceText = nbService.getText();
 
-            if (servicesService.ajoutService(service)) {
-                System.out.println("ajout succes");
-                nom.setText("");
-                des.setText("");
-                nbService.setText("");
-
+            if (nomText.isEmpty() || desText.isEmpty() || nbServiceText.isEmpty()) {
+                Dialog.show("Erreur", "Veuillez remplir tous les champs", "OK", null);
+                return;
             }
+
+    
+
+            // Vérification du format du nombre de services
+            int nbServiceValue;
+            try {
+                nbServiceValue = Integer.parseInt(nbServiceText);
+                if (nbServiceValue <= 0) {
+                    Dialog.show("Erreur", "Le nombre de services doit être supérieur à zéro", "OK", null);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                Dialog.show("Erreur", "Le nombre de services doit être un entier valide", "OK", null);
+                return;
+            }
+    service.setService_nom(nomText);
+    service.setService_description(desText);
+    service.setService_image(imgS);
+    service.setNb_sous_services(nbServiceValue);
+
+    if (servicesService.ajoutService(service)) {
+        System.out.println("ajout succes");
+        nom.setText("");
+        des.setText("");
+        nbService.setText("");
+    }
         });
         Button btnAnnuler = new Button("Annuler");
         btnAnnuler.addActionListener(e -> {
@@ -99,6 +124,8 @@ public class GererService {
         });
 
     }
+
+  
 
     
     

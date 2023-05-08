@@ -1,6 +1,7 @@
 package com.mycompany.myapp;
 
 
+import com.codename1.charts.util.ColorUtil;
 import static com.codename1.ui.CN.*;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
@@ -15,11 +16,14 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.codename1.ui.layouts.BorderLayout;
 import com.mycompany.entites.Services;
+import com.mycompany.entites.Utilisateur;
 import com.mycompany.gui.CalendarForm;
 import com.mycompany.gui.GererService;
 import com.mycompany.gui.ListService;
 import com.mycompany.gui.ServiceFormFront;
 import com.mycompany.services.ServicesService;
+import com.mycompany.services.SousServicesService;
+import java.util.ArrayList;
 
 
 public class MyApplication {
@@ -56,9 +60,8 @@ public class MyApplication {
             return;
         }
         
-        new ServiceFormFront(theme).show();
-
-        
+      new ServiceFormFront(theme).show();
+ 
         
     }
 

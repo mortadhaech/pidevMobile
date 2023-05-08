@@ -27,11 +27,11 @@ import java.util.Date;
  */
 public class CalendarForm extends BaseForm {
 
-    public CalendarForm() {
-        this(com.codename1.ui.util.Resources.getGlobalResources());
+    public CalendarForm(int id) {
+        this(com.codename1.ui.util.Resources.getGlobalResources(),id);
     }
     
-    public CalendarForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+    public CalendarForm(com.codename1.ui.util.Resources resourceObjectInstance,int id) {
         initGuiBuilderComponents(resourceObjectInstance);
         setLayout(BoxLayout.y());
         setScrollableY(true);
@@ -68,7 +68,7 @@ public class CalendarForm extends BaseForm {
         gui_Calendar_1.replace(combos, cnt, null);
         
          EngagmentService e=new EngagmentService();
-         ArrayList<Engagment> en=e.AffichageEvenement(58);
+         ArrayList<Engagment> en=e.AffichageEvenement(id);
         
               for(Engagment e1: en)
          { Date dateC=null;

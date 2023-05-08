@@ -12,6 +12,7 @@ import com.mycompany.utils.MyCnx;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.mycompany.entites.Utilisateur;
 
 
 public class SousServicesService {
@@ -86,5 +87,59 @@ public class SousServicesService {
         return result;
 
     }
+public ArrayList<Utilisateur> affichageFreelancer(int idS) {
+    ArrayList<Utilisateur> result = new ArrayList<>();
+
+    String url = MyCnx.BASE_URL + "/FreelancerSJson/" + idS;
+    req.setUrl(url);
+
+    req.addResponseListener(new ActionListener<NetworkEvent>() {
+        @Override
+        public void actionPerformed(NetworkEvent evt) {
+            JSONParser jsonp;
+            jsonp = new JSONParser();
+
+            try {
+                Map<String, Object> mapService = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
+
+                List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapService.get("root");
+
+                for (Map<String, Object> obj : listOfMaps) {
+                    Utilisateur ser = new Utilisateur();
+
+                    float id=Float.parseFloat(obj.get("id").toString());
+                    String nom = obj.get("nom").toString();
+                    String description = obj.get("description").toString();
+                    String photo = obj.get("image").toString();
+                    float num=Float.parseFloat(obj.get("num").toString());
+boolean verified=Boolean.parseBoolean(obj.get("verified").toString());
+                    float rate=Float.parseFloat(obj.get("rate").toString());
+
+                    ser.setId((int)id);
+                    ser.setNom(nom);
+                    ser.setDescription(description);
+                    ser.setPhoto(photo);
+                    ser.setNumtel((int)num);
+                    ser.setVerified(verified);
+                    ser.setRate((int)rate);
+
+                    
+                    
+              
+
+                    result.add(ser);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    });
+
+    NetworkManager.getInstance().addToQueueAndWait(req);
+
+    return result;
+}
     
+        
+        
 }
