@@ -45,8 +45,8 @@ public class ListReponse extends Form {
     
     
     public void addElement(Reponse reclam) {
-        Button btn_up =new Button("update")  ;
-        btn_up.addActionListener(e-> new EditReclam(this,reclam.getId()).show());
+        Button btn_up =new Button("view")  ;
+        btn_up.addActionListener(e-> new ViewReclam(this,reclam.getId()).show());
     Button btn_2 = new Button("Delete");
     btn_2.addActionListener(new ActionListener() {
         @Override
@@ -56,17 +56,17 @@ public class ListReponse extends Form {
             boolean result = serviceReponse.getInstance().suppReponse(reclam);
             if (result) {
                 dlg.dispose();
-                Dialog.show("Success", "Reclamation deleted successfully", "OK", null);
+                Dialog.show("Success", "Reponse deleted successfully", "OK", null);
                 refreshList();
             } else {
                 dlg.dispose();
-                Dialog.show("Error", "Failed to delete Reclamation", "OK", null);
+                Dialog.show("Error", "Failed to delete Reponse", "OK", null);
             }
         }
     });
 
     //Button btn = new Button(reclam.getTitle());
-        System.out.println(reclam.getSubject()+"mmmmmmmmmm");
+        //System.out.println(reclam.getSubject()+"mmmmmmmmmm");
     //Label right = new Label("titre :"+reclam.getSubject());
     Label right2 = new Label("subject :"+reclam.getSubject());
 //    btn.addActionListener(new ActionListener() {

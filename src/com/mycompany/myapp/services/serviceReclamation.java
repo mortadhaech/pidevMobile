@@ -13,6 +13,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 
 import com.mycompany.myapp.entities.Reclamation;
+import com.mycompany.myapp.entities.Utilisateur;
 import static com.mycompany.myapp.services.serviceReclamation.instance;
 import com.mycompany.myapp.utils.Statics;
 
@@ -226,7 +227,18 @@ public class serviceReclamation {
                     
                     else {
                         rec.setSubject(obj.get("sujet").toString());}
+                    if(obj.get("date_reclamation")==null){
+                
+                    rec.setSubject("null"); }
+                    
+                    else {
+                        //System.out.println((Date)obj.get("date_reclamation")+"mmmmmmmmmmmmmmmmmmmmmm");
+                        //rec.setDate((Date)obj.get("date_reclamation"));
+                    }
+                    
+                    
              }
+             
         } catch (IOException ex) {
                  System.out.println("errrrrrrrrr");
         }

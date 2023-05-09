@@ -32,7 +32,7 @@ public class AddReponse extends Form{
         setTitle("Add a new Reponse");
         setLayout(BoxLayout.y());
         
-System.out.println(id+"kfkffffffffffff");
+//System.out.println(id+"kfkffffffffffff");
         TextField tfSubject = new TextField("","Subject");
         CheckBox cbStatus = new CheckBox("Status");
         Button btnValider = new Button("Add reponse");
@@ -57,7 +57,7 @@ System.out.println(id+"kfkffffffffffff");
                 Reponse t = new Reponse(id,tfSubject.getText().toString());
                 
                 if( serviceReponse.getInstance().addReclamtion(t)) {
-                    Dialog.show("Success","Reclamation added",new Command("OK"));
+                    Dialog.show("Success","Reponse added",new Command("OK"));
                     System.out.println(t.toString());
                 } else {
                     Dialog.show("ERROR", "Server error", new Command("OK"));
