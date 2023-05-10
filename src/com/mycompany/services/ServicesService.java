@@ -7,7 +7,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.entites.Services;
-import com.mycompany.utils.MyCnx;
+import com.mycompany.utils.Statics;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ServicesService {
     public boolean ajoutService(Services services) {
         try {
 
-            String url = MyCnx.BASE_URL + "/addserviceJson?serN=" + services.getService_nom() + "&serD=" + services.getService_description()
+            String url = Statics.BASE_URL + "/addserviceJson?serN=" + services.getService_nom() + "&serD=" + services.getService_description()
                     + "&serI=" + services.getService_image() + "&serNb=" + services.getNb_sous_services();
 
             req.setUrl(url);
@@ -57,7 +57,7 @@ public class ServicesService {
 
     public boolean modifierService(int id, Services services) {
         try {
-            String url = MyCnx.BASE_URL + "/editJson/" + id + "?&serN=" + services.getService_nom()
+            String url = Statics.BASE_URL + "/editJson/" + id + "?&serN=" + services.getService_nom()
                     + "&serD=" + services.getService_description() + "&serNb=" + services.getNb_sous_services()
                     + "&serI=" + services.getService_image();
             req.setUrl(url);
@@ -77,7 +77,7 @@ public class ServicesService {
     }
 
     public Services findService(Services services) {
-        String url = MyCnx.BASE_URL + "/findJson/" + services.getService_id();
+        String url = Statics.BASE_URL + "/findJson/" + services.getService_id();
         req.setHttpMethod("POST");
         req.setUrl(url);
         req.addArgument("serN", services.getService_nom());
@@ -104,7 +104,7 @@ public class ServicesService {
     }
 
     public boolean deleteService(int id) {
-        String url = MyCnx.BASE_URL + "/deleteJson/" + id;
+        String url = Statics.BASE_URL + "/deleteJson/" + id;
 
         req.setUrl(url);
 
@@ -123,7 +123,7 @@ public class ServicesService {
     public ArrayList<Services> affichageServices() {
         ArrayList<Services> result = new ArrayList<>();
 
-        String url = MyCnx.BASE_URL + "/servicesJson";
+        String url = Statics.BASE_URL + "/servicesJson";
         req.setUrl(url);
 
         req.addResponseListener(new ActionListener<NetworkEvent>() {

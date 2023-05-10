@@ -8,11 +8,11 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.entites.Sous_services;
-import com.mycompany.utils.MyCnx;
+import com.mycompany.utils.Statics;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.mycompany.entites.Utilisateur;
+import com.mycompany.entities.Utilisateur;
 
 
 public class SousServicesService {
@@ -40,7 +40,7 @@ public class SousServicesService {
         public ArrayList<Sous_services> affichageServices(int id) {
         ArrayList<Sous_services> result = new ArrayList<>();
 
-        String url = MyCnx.BASE_URL + "/sousservicesJson/"+id;
+        String url = Statics.BASE_URL + "/sousservicesJson/"+id;
         req.setUrl(url);
 
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -90,7 +90,7 @@ public class SousServicesService {
 public ArrayList<Utilisateur> affichageFreelancer(int idS) {
     ArrayList<Utilisateur> result = new ArrayList<>();
 
-    String url = MyCnx.BASE_URL + "/FreelancerSJson/" + idS;
+    String url = Statics.BASE_URL + "/FreelancerSJson/" + idS;
     req.setUrl(url);
 
     req.addResponseListener(new ActionListener<NetworkEvent>() {

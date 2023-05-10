@@ -14,7 +14,7 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.entites.Services;
 import com.mycompany.entites.Sous_services;
-import com.mycompany.entites.Utilisateur;
+import com.mycompany.entities.Utilisateur;
 import static com.mycompany.myapp.MyApplication.theme;
 import com.mycompany.services.EngagmentService;
 import com.mycompany.services.ServicesService;
@@ -52,9 +52,10 @@ public void addService(int id, String serviceName, String description, String im
     serviceButton.setTextLine3("Rate: " + rate);
     serviceButton.setTextLine4("Num: " + num);
     
-    Button reclamerButton = new Button("Réclamer");
+    Button reclamerButton = new Button("pofil");
     reclamerButton.addActionListener(e -> {
-        // Action à effectuer lors du clic sur le bouton "Réclamer"
+ new ProfileForm (theme).show();
+
     });
 reclamerButton.setWidth(30); // Définir la largeur préférée
 reclamerButton.setHeight(10); // Définir la hauteur préférée

@@ -8,7 +8,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.entites.Engagment;
-import com.mycompany.utils.MyCnx;
+import com.mycompany.utils.Statics;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class EngagmentService {
        public ArrayList<Engagment> AffichageEvenement(int idfree) {
         ArrayList<Engagment> result = new ArrayList<>();
 
-        String url = MyCnx.BASE_URL + "/engagementfreelancerJson/"+idfree;
+        String url = Statics.BASE_URL + "/engagementfreelancerJson/"+idfree;
         req.setUrl(url);
 
         req.addResponseListener(new ActionListener<NetworkEvent>() {

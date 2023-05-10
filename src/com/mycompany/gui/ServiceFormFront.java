@@ -1,6 +1,7 @@
 package com.mycompany.gui;
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.components.MultiButton;
+import com.codename1.ui.Button;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
@@ -21,13 +22,12 @@ public class ServiceFormFront extends Form {
         setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         ServicesService ss=new ServicesService();
         ArrayList<Services> s=ss.affichageServices();
-        
         for(Services b: s)
         {
         addService(b.getService_id(),b.getService_nom(), b.getService_description(),b.getService_image(), ColorUtil.BLUE);
             
         }
-        
+    
     }
 
     public void addService(int serviceId, String serviceName, String description, String imagePath, int color) {
