@@ -8,32 +8,132 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import com.codename1.ui.util.UIBuilder;
 import com.codename1.io.Log;
+import com.codename1.ui.Component;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.mycompany.entites.Services;
 import static com.mycompany.myapp.MyApplication.theme;
 import com.mycompany.services.ServicesService;
 import java.io.IOException;
-
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.io.MultipartRequest;
+import com.codename1.io.NetworkManager;
+import com.codename1.io.Util;
+import com.codename1.ui.Button;
+import com.codename1.ui.Form;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.util.Resources;
+import com.codename1.ui.Container;
+import com.codename1.ui.Display;
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.util.UITimer;
+import java.io.InputStream;
 public class GererService {
+public static String  img;
+private static  void uploadImage(String imagePath) {
+        try {
+            MultipartRequest request = new MultipartRequest() {
+                @Override
+                protected void readResponse(InputStream input) throws IOException {
+                    
+                    String response = Util.readToString(input);
+                    System.out.println("Réponse du serveur : " + response);
+                }
+            };
 
 
+            request.addData("file", imagePath, "image/png");
+
+            // Envoyer la requête au serveur
+            NetworkManager.getInstance().addToQueueAndWait(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void AjouterServiceForm() {
         
         
         UIBuilder uIBuilder = new UIBuilder();
         uIBuilder.registerCustomComponent("imgS", ImageViewer.class);
 
+        
+ImageViewer imgViewer = new ImageViewer();
+try {
+    Image image = Image.createImage("/load.png");
+          
+    imgViewer.setImage(image);
+} catch (IOException ex) {
+    ex.printStackTrace();
+}
+ 
+         
+        
         Container c = uIBuilder.createContainer(theme, "AjouterService");
+
         Form f1 = (Form) uIBuilder.findByName("AjouterService", c);
         TextField nom = (TextField) uIBuilder.findByName("Nomserv", c);
         TextField des = (TextField) uIBuilder.findByName("Descserv", c);
         TextField nbService = (TextField) uIBuilder.findByName("nbServ", c);
         //ImageViewer imgS=(ImageViewer) uIBuilder.findByName("imgS", c);
-        String imgS = "10cfdbc6-9b83-4d8c-bb0f-49e0117aef8a.PNG";
+        String   imgS;
         Button btnAj = (Button) uIBuilder.findByName("btnajout", c);
         Button btnannuler = (Button) uIBuilder.findByName("btnAnnuler", c);
+        
+Container mainContainer = new Container(new BorderLayout());
+ Button myButton = new Button("upload image");
+        
+        myButton.addActionListener(new ActionListener() {
+           
 
-        f1.show();
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+
+           
+                    Display.getInstance().openGallery(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt != null && evt.getSource() != null) {
+                                final String imagePath = (String) evt.getSource();
+                                try {
+                                    Image image = Image.createImage(imagePath);
+                                    imgViewer.setImage(image);
+                                    System.out.println(imagePath);
+                                                                        img=imagePath;
+                                                                        
+                                                                        
+
+                                } catch (IOException e) {
+
+                                    e.printStackTrace();
+                                }
+                                
+                            }
+                        }
+                    }, Display.GALLERY_IMAGE);
+                }
+            
+        });
+        
+    
+
+    mainContainer.addComponent(BorderLayout.NORTH, imgViewer);
+    
+    mainContainer.addComponent(BorderLayout.SOUTH, myButton);
+
+            mainContainer.addComponent(BorderLayout.CENTER, c);
+
+    Form form = new Form();
+    form.setLayout(new BorderLayout());
+    form.addComponent(BorderLayout.CENTER, mainContainer);
+    form.show();
 
         Services service = new Services();
         ServicesService servicesService = new ServicesService();
@@ -48,37 +148,44 @@ public class GererService {
                 return;
             }
 
-    
+     if (img==null ) {
+                Dialog.show("Erreur", "selectionner une image", "OK", null);
+                return;
+            }
 
             // Vérification du format du nombre de services
             int nbServiceValue;
             try {
                 nbServiceValue = Integer.parseInt(nbServiceText);
-                if (nbServiceValue <= 0) {
-                    Dialog.show("Erreur", "Le nombre de services doit être supérieur à zéro", "OK", null);
+                if (nbServiceValue < 0) {
+                    Dialog.show("Erreur", "Le nombre de services doit etre positif", "OK", null);
                     return;
                 }
             } catch (NumberFormatException e) {
                 Dialog.show("Erreur", "Le nombre de services doit être un entier valide", "OK", null);
                 return;
             }
-    service.setService_nom(nomText);
+    
+            service.setService_nom(nomText);
     service.setService_description(desText);
-    service.setService_image(imgS);
+    
+    service.setService_image(img);
     service.setNb_sous_services(nbServiceValue);
 
     if (servicesService.ajoutService(service)) {
-        System.out.println("ajout succes");
+             Dialog.show("Succes", "Ajouter  Succes", "OK", null);
         nom.setText("");
         des.setText("");
         nbService.setText("");
     }
         });
-        Button btnAnnuler = new Button("Annuler");
-        btnAnnuler.addActionListener(e -> {
-            System.out.println("ajout annuler");
-
+        btnannuler.addActionListener(e -> {
+new ListService();
         });
+
+
+
+    
     }
 
     public static void ModifierServiceForm(Services services) {
@@ -103,15 +210,39 @@ public class GererService {
 
         Services service = new Services();
         ServicesService servicesService = new ServicesService();
+        
         btnMo.addPointerPressedListener(l -> {
 
+          String nomText = nom.getText();
+            String desText = des.getText();
+            String nbServiceText = nbService.getText();
+
+            if (nomText.isEmpty() || desText.isEmpty() || nbServiceText.isEmpty()) {
+                Dialog.show("Erreur", "Veuillez remplir tous les champs", "OK", null);
+                return;
+            }
+
+    
+
+            // Vérification du format du nombre de services
+            int nbServiceValue;
+            try {
+                nbServiceValue = Integer.parseInt(nbServiceText);
+                if (nbServiceValue <= 0) {
+                    Dialog.show("Erreur", "Le nombre de services doit être supérieur à zéro", "OK", null);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                Dialog.show("Erreur", "Le nombre de services doit être un entier valide", "OK", null);
+                return;
+            }
             service.setService_nom(nom.getText());
             service.setService_description(des.getText());
             service.setService_image(imgS);
             service.setNb_sous_services(Integer.parseInt(nbService.getText()));
             if (servicesService.modifierService(id, service)) {
-                System.out.println("Modification succes");
-                nom.setText("");
+             Dialog.show("Succes", "Modification Succes", "OK", null);
+
                 des.setText("");
                 nbService.setText("");
          new ListService();
@@ -119,8 +250,7 @@ public class GererService {
             }
         });
         btnAn.addActionListener(e -> {
-            System.out.println("Modification annuler");
-
+new ListService();
         });
 
     }
@@ -132,7 +262,7 @@ public class GererService {
     
     public void init() {
         try {
-            theme = Resources.openLayered("/theme");
+            theme = Resources.openLayered("/theme-");
         } catch (IOException ex) {
             Log.e(ex);
         }

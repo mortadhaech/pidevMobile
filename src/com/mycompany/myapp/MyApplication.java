@@ -13,6 +13,7 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
+import com.mycompany.gui.GererService;
 import com.mycompany.gui.ServiceFormFront;
 import com.mycompany.gui.SignInForm;
 import com.mycompany.gui.SignUpForm;
@@ -54,10 +55,9 @@ public class MyApplication {
             current.show();
             return;
         }
-        new ServiceFormFront (theme).show();
-       /* Form hi = new Form("Hi World", BoxLayout.y());
-        hi.add(new Label("Hi World"));
-        hi.show();*/
+       // GererService g=new GererService();
+        //g.AjouterServiceForm();
+       new ServiceFormFront(theme).show();
     }
 
     public void stop() {

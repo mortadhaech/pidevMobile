@@ -146,13 +146,65 @@ public class ServicesService {
                         String Nom = obj.get("serviceNom").toString();
                         String des = obj.get("serviceDescription").toString();
                         String img = obj.get("serviceImage").toString();
+                        float nbs = Float.parseFloat(obj.get("nbSousServices").toString());
 
 
                         ser.setService_id((int)id );
                         ser.setService_nom(Nom);
                         ser.setService_description(des);
                         ser.setService_image(img);
-                        ser.setNb_sous_services(65);
+                        ser.setNb_sous_services((int)nbs);
+                        result.add(ser);
+
+                    }
+
+                } catch (Exception ex) {
+
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+
+        NetworkManager.getInstance().addToQueueAndWait(req);
+
+        return result;
+
+    }
+ public ArrayList<Services> SearchServices(String search) {
+        ArrayList<Services> result = new ArrayList<>();
+
+        String url = Statics.BASE_URL + "/searchJson/"+search;
+        req.setUrl(url);
+
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp;
+                jsonp = new JSONParser();
+
+                try {
+                    Map<String, Object> mapService = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
+
+                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapService.get("root");
+
+
+                    for (Map<String, Object> obj : listOfMaps) {
+
+                        Services ser = new Services();
+
+                        float id = Float.parseFloat(obj.get("serviceId").toString());
+                        String Nom = obj.get("serviceNom").toString();
+                        String des = obj.get("serviceDescription").toString();
+                        String img = obj.get("serviceImage").toString();
+                        float nbs = Float.parseFloat(obj.get("nbSousServices").toString());
+
+
+                        ser.setService_id((int)id );
+                        ser.setService_nom(Nom);
+                        ser.setService_description(des);
+                        ser.setService_image(img);
+                        ser.setNb_sous_services((int)nbs);
                         result.add(ser);
 
                     }

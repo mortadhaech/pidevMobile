@@ -36,13 +36,12 @@ public class SousServiceFormFrons extends Form{
     public void addService(int sserviceId ,String serviceName, String description, String imagePath, int color) {
         MultiButton serviceButton = new MultiButton(serviceName);
         serviceButton.setTextLine2(description);
-        serviceButton.setIcon(createColorIcon(color)); // Créez une icône colorée avec la couleur spécifiée
+        serviceButton.setIcon(createColorIcon(color));
         
-        // Chargement de l'image à partir du chemin d'accès spécifié
         try {
             Image image = Image.createImage(Display.getInstance().getResourceAsStream(getClass(), "/" + imagePath));
             EncodedImage encodedImage = EncodedImage.createFromImage(image, false);
-            serviceButton.setIcon(createScaledImage(encodedImage)); // Définir l'image à l'aide d'une image mise à l'échelle
+            serviceButton.setIcon(createScaledImage(encodedImage));
         } catch (Exception e) {
             e.printStackTrace();
         }
