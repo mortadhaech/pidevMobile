@@ -269,4 +269,21 @@ public class serviceReclamation {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
+    
+    
+    public ArrayList<Reclamation> getReclamById(int id) {
+    String url = Statics.BASE_URL + "showreclamJSOONById/"+id+"/"   ;
+    //req = new ConnectionRequest();
+    req.setUrl(url);
+    req.setPost(false);
+    req.addResponseListener(new ActionListener<NetworkEvent>() {
+        @Override
+        public void actionPerformed(NetworkEvent evt) {
+            reclam = parseReclam(new String(req.getResponseData()));
+            req.removeResponseListener(this);
+        }
+    });
+    NetworkManager.getInstance().addToQueueAndWait(req);
+        return reclam;
+    }
 }

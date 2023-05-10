@@ -37,6 +37,13 @@ public class HomeForm extends Form {
         Button btnListTasks = new Button("List Reclamation");
         Button btnListTaskss = new Button("Back");
 
+        Button btnAddTaskoffre = new Button("Ajouter Offre");
+        Button btnListTasksoffre  = new Button("Afficher Offre");
+        
+        btnAddTaskoffre .addActionListener(e-> new AddOffre(this).show());
+        btnListTasksoffre .addActionListener(e-> new ListOffr(this).show());
+        addAll(btnAddTaskoffre ,btnListTasksoffre );
+        
         btnAddTask.addActionListener(e -> new AddReclam(this).show());
         btnListTasks.addActionListener(e -> new ListReclam(this).show());
         btnListTaskss.addActionListener(e -> new ListReclamBack(this).show());

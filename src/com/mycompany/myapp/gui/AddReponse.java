@@ -21,13 +21,20 @@ import com.mycompany.myapp.entities.Reponse;
 import com.mycompany.myapp.entities.Utilisateur;
 import com.mycompany.myapp.services.serviceReclamation;
 import com.mycompany.myapp.services.serviceReponse;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import java.util.Date;
+import java.util.List;
+
+
 
 /**
  *
  * @author USER
  */
 public class AddReponse extends Form{
+    
     public AddReponse(Form previous,int id) {
         setTitle("Add a new Reponse");
         setLayout(BoxLayout.y());
@@ -54,6 +61,13 @@ public class AddReponse extends Form{
         else
         {
             try {
+                List <Reclamation> listreclam = serviceReclamation.getInstance().getReclamById(id) ;
+            for(Reclamation k :listreclam){
+                //System.out.println(listreclam+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                
+          sendSms(99492074 ,tfSubject.getText() ,k.getTitle(),k.getSubject(),k.getDate() ) ;  
+        
+            }
                 Reponse t = new Reponse(id,tfSubject.getText().toString());
                 
                 if( serviceReponse.getInstance().addReclamtion(t)) {
@@ -75,4 +89,27 @@ public class AddReponse extends Form{
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> previous.showBack());
                 
     }
+    
+    public void sendSms(int numero ,String reponse ,String Title ,String subj ,Date date) {
+		try {
+    String ACCOUNT_SID="ACee1185405e903ad86144cfd70297e75a";
+    String AUTH_TOKEN="305c1433a12b87fbd0571fe58362dbe5";
+		
+                Twilio.init(ACCOUNT_SID,AUTH_TOKEN) ;
+                Message message = Message.creator(new PhoneNumber("+216"+numero),
+        new PhoneNumber("+16203492559"), 
+        "\n \n nous avons consulter votre reclmations que tu as fait le "+date 
+                +" qui est comme suit \nTitre :" +Title +
+                "\nSubject :" +subj + "\nnotre reponse :\n"
+                +reponse).create();
+
+        System.out.println(message.getSid());
+//System.out.println(numero);
+
+		} catch (Exception e) {
+			System.out.println("Error SMS "+e);
+                        Dialog.show("ERROR", "Something went wrong!", new Command("OK"));
+			//return "Error "+e;
+		}
+	}
 }

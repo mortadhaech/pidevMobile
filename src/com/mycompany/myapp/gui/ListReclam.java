@@ -17,6 +17,10 @@ import com.mycompany.myapp.services.serviceReclamation;
 import java.util.ArrayList;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
 
 /**
  *
@@ -26,19 +30,27 @@ public class ListReclam extends Form {
     public ListReclam(Form previous) {
         setTitle("List Reclamation");
         setLayout(BoxLayout.y());
-
-        /*SpanLabel sp = new SpanLabel();
-        sp.setText(ServiceTask.getInstance().getAllTasks().toString());
-        add(sp);
-         */
+        Button sort = new Button("Trier par Titre");
+        //sort
+        //System.out.println(sort+"");
+        add(sort);
+        revalidate();
+        repaint();
+       // Button sortDateButton = new Button("Sort by Date");
+sort.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        sortReclamByTitle(previous);
+    }
+});
         ArrayList<Reclamation> quizs = serviceReclamation.getInstance().getAllReclam();
 
         for (Reclamation t : quizs) {
             addElement(t);
         }
-
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e -> previous.showBack());
 
+    
     }
     
     
@@ -82,6 +94,30 @@ private void refreshList() {
     ArrayList<Reclamation> quizs = serviceReclamation.getInstance().getAllReclam();
     for (Reclamation t : quizs) {
         addElement(t);
+    }
+    revalidate();
+}
+
+
+public void sortReclamByTitle(Form previous) {
+    Button sort = new Button("Trier par id");
+    ArrayList<Reclamation> reclamList = serviceReclamation.getInstance().getAllReclam();
+    Collections.sort(reclamList, new Comparator<Reclamation>() {
+        @Override
+        public int compare(Reclamation r1, Reclamation r2) {
+            return r1.getTitle().compareTo(r2.getTitle());
+        }
+    });
+    removeAll();
+    add(sort);
+    sort.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            new ListReclam(previous).show();
+        }
+    });
+    for (Reclamation r : reclamList) {
+        addElement(r);
     }
     revalidate();
 }
